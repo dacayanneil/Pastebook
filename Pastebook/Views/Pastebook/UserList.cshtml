@@ -1,0 +1,39 @@
+﻿@model Pastebook.UserListModel
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Gender)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.UserList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Gender)
+            </td>
+        </tr>
+    }
+</table>

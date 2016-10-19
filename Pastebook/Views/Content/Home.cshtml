@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="col-md-1"></div>
+        <div class="col-md-10">
+            @Html.Partial("CreatePost")
+            @Html.Partial("Content")
+        </div>
+    <div class="col-md-1"></div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            alert("OKAY!")
+    });
+    </script>
+}
