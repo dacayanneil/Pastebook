@@ -1,0 +1,59 @@
+﻿@model IEnumerable<PastebookEFModel.PB_POST>
+
+@{
+    foreach (var post in Model)
+    {
+        <div id="post-details">
+            @post.PB_USER.FIRST_NAME
+        </div>
+        <div id="post-content">
+            @post.CONTENT
+        </div>
+        <div id="post-options">
+            @{
+                int likeID = 0;
+                foreach (var like in @post.PB_LIKE)
+                {
+                    if (like.LIKED_BY == (int)Session["currentID"])
+                    {
+
+                        likeID = like.ID;
+                    }
+                }
+                if (likeID != 0)
+                {
+                    <button class="btn btn-default" type="button" id="btnLiked" onclick="unlikePost(@likeID, @post.ID)">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span>Like</span>
+                        @*<span class="badge">@post.LikeList.Count()</span>*@
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-default" type="button" id="btnUnliked" onclick="likePost(@post.ID)">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span>Like</span>
+                        @*<span class="badge">@post.LikeList.Count()</span>*@
+                    </button>
+                }
+            }
+            <input type="text" id="textarea_@post.ID" />
+            <button class="btn btn-default" type="button" id="btnComment" value="@post.ID" onclick="CreateComment(this)">
+                <span class="glyphicon glyphicon-comment"></span>
+                <span>Comment</span>
+                @*<span class="badge">@post.CommentList.Count()</span>*@
+            </button>
+        </div>
+        <div>
+            @{
+                foreach (var comment in @post.PB_COMMENT)
+                {
+                    @comment.CONTENT;
+                }
+            }
+        </div>
+                }
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -31,20 +31,53 @@ namespace Pastebook.Controllers
             return View();
         }
 
-        
-        public ActionResult Home()
+        public JsonResult CreatePost(PostModel post)
         {
-            var homeViewModel = new HomeViewModel();
-            homeViewModel.PostList = viewManager.FillPostList();
-            return PartialView(homeViewModel);
+            var process = contentManager.AddPost(post);
+            return Json(new { status = process}, JsonRequestBehavior.AllowGet);
         }
 
-
-        public PartialViewResult Content()
+        public JsonResult LikePost(LikeModel like)
         {
-            var homeViewModel = new HomeViewModel();
-            homeViewModel.PostList = contentManager.RetrievePost();
-            return PartialView(homeViewModel);
+            var process = contentManager.AddLike(like);
+            return Json(new { status = process}, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UnlikePost(int id)
+        {
+            var process = contentManager.RemoveLike(id);
+            return Json(new { status = process }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Home()
+        {
+            return View();
+        }
+        
+        public ActionResult NewsFeedContent(int id)
+        {
+            var newsFeedPost = new UserPostDetailsModel();
+            newsFeedPost.PostList = viewManager.FillTimeLinePostList(id);
+            return PartialView("NewsfeedPartial", newsFeedPost);
+        }
+
+        public ActionResult TimeLineProfile(int id)
+        {
+            return View(id);
+        }
+
+        public ActionResult ProfileContent(int id)
+        {
+            var profileContent = new UserModel();
+            profileContent = userManager.RetrieveSpecificUser(id);
+            return PartialView("ProfileContentPartial", profileContent);
+        }
+
+        public ActionResult TimeLineContent(int id)
+        {
+            var timeLineContent = new UserPostDetailsModel();
+            timeLineContent.PostList = viewManager.FillTimeLinePostList(id);
+            return PartialView("TimeLineContentPartial", timeLineContent);
         }
 
     }

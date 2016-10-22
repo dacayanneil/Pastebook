@@ -15,7 +15,7 @@ namespace Pastebook
         {
             var postList = new List<PostModel>();
 
-            var result = contentBL.RetrievePosts();
+            var result = contentBL.RetrievePost();
             foreach(var item in result)
             {
                 postList.Add(mapper.PostEntityToModel(item));
@@ -24,10 +24,37 @@ namespace Pastebook
             return postList;
         }
 
+        public List<PostModel> RetrieveUserPost(int id)
+        {
+            var postList = new List<PostModel>();
+
+            var result = contentBL.RetrieveUserPost(id);
+
+            foreach (var item in result)
+            {
+                postList.Add(mapper.PostEntityToModel(item));
+            }
+            return postList;
+        }
+
         public int AddPost(PostModel inputPost)
         {
             int status = 0;
             status = contentBL.AddPost(mapper.PostModelToEntity(inputPost));
+            return status;
+        }
+
+        public int AddLike(LikeModel inputLike)
+        {
+            int status = 0;
+            status = contentBL.AddLike(mapper.LikeModelToEntity(inputLike));
+            return status;
+        }
+
+        public int RemoveLike(int id)
+        {
+            int status = 0;
+            status = contentBL.RemoveLike(id);
             return status;
         }
 

@@ -109,5 +109,15 @@ namespace Pastebook
 
             return comment;
         }
+
+        public LikeEntity LikeModelToEntity(LikeModel inputLike)
+        {
+            var like = new LikeEntity();
+
+            like.Post_ID = inputLike.Post_ID;
+            like.Liked_By = inputLike.Liked_By;
+
+            return like;
+        }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model Int32
+
+<h2>TimeLineProfile</h2>
+
+<div class="container">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div>
+            @{
+                Html.RenderAction("ProfileContent", new { id = Model});
+            }
+        </div>
+        <div>
+            @{
+                Html.Partial("CreatePost");
+            }
+        </div>
+        <div id="postListPartial">
+            @{
+                Html.RenderAction("TimeLineContent", new { id = Model});
+            }
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+@section scripts {
+    <script>
+
+        var CreatePostUrl = '@Url.Action("CreatePost", "Content")';
+        var LikePostUrl = '@Url.Action("LikePost", "Content")';
+        var UnlikePostUrl = '@Url.Action("UnlikePost", "Content")';
+        var PostRefreshUrl = '@Url.Action("TimeLineContent")';
+        var currentID = '@Session["currentID"]';
+
+    </script>
+
+    <script src="~/Scripts/FunctionScripts/ContentFunction.js"> </script>
+}
+

@@ -1,22 +1,31 @@
 ﻿
-@{
-    ViewBag.Title = "Home";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
 <div class="container">
     <div class="col-md-1"></div>
         <div class="col-md-10">
-            @Html.Partial("CreatePost")
-            @Html.Partial("Content")
+            <div>
+                @Html.Partial("CreatePost")
+            </div>
+            <div id="postListPartial">
+                @{
+                    Html.RenderAction("NewsFeedContent", new {id = Session["currentID"]});
+                }
+            </div>
         </div>
     <div class="col-md-1"></div>
 </div>
 
 @section scripts {
+
     <script>
-        $(document).ready(function () {
-            alert("OKAY!")
-    });
+        var CreatePostUrl = '@Url.Action("CreatePost", "Content")';
+        var LikePostUrl = '@Url.Action("LikePost", "Content")';
+        var UnlikePostUrl = '@Url.Action("UnlikePost", "Content")';
+        var PostRefreshUrl = '@Url.Action("NewsFeedContent")';
+        var currentID = '@Session["currentID"]';
     </script>
+
+    <script src="~/Scripts/FunctionScripts/ContentFunction.js"> </script>
 }
+
+
+

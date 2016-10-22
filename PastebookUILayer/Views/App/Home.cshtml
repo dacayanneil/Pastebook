@@ -1,0 +1,31 @@
+﻿<div id="page-body">
+<div class="container">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="form-group">
+            @Html.Partial("CreatePostPartial")
+        </div>
+        <div id="postListPartial" class="form-group">
+            @{
+                Html.RenderAction("NewsFeedPost", new { id = Model});
+            }
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+</div>
+@section scripts {
+    <script>
+            var CreatePostUrl = '@Url.Action("CreatePost", "App")';
+            var CreateCommentUrl = '@Url.Action("CreateComment", "App")';
+            var LikePostUrl = '@Url.Action("LikePost", "App")';
+            var LikeNotificationUrl = '@Url.Action("LikeNotification", "App")';
+            var GetCommentIDUrl = '@Url.Action("GetCommentID", "App")';
+            var CommentNotificationUrl = '@Url.Action("CommentNotification", "App")';
+            var UnlikePostUrl = '@Url.Action("UnlikePost", "App")';
+            var PostRefreshUrl = '@Url.Action("NewsFeedPost", new { id = Model })';
+            var currentID = '@Session["currentID"]';
+            var profileOwner = currentID;
+   </script>
+   <script src="~/Scripts/FunctionScripts.js"> </script>
+}

@@ -32,14 +32,36 @@ namespace PastebookBL
             return status;
         }
 
-        public List<PostEntity> RetrievePosts()
+        public List<PostEntity> RetrievePost()
         {
             List<PostEntity> postList = new List<PostEntity>();
             try
             {
                 using (var context = new PASTEBOOK_Entities())
                 {
-                    var result = context.PB_POST.ToList();
+                    var result = context.PB_POST.OrderByDescending(x => x.CREATED_DATE).ToList();
+
+                    foreach (var item in result)
+                    {
+                        postList.Add(mapper.PostDbToEntity(item));
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+
+            }
+            return postList;
+        }
+
+        public List<PostEntity> RetrieveUserPost(int id)
+        {
+            List<PostEntity> postList = new List<PostEntity>();
+            try
+            {
+                using (var context = new PASTEBOOK_Entities())
+                {
+                    var result = context.PB_POST.Where(x => x.PROFILE_OWNER_ID == id).OrderByDescending(x => x.CREATED_DATE).ToList();
                     foreach(var item in result)
                     {
                         postList.Add(mapper.PostDbToEntity(item));
@@ -47,6 +69,24 @@ namespace PastebookBL
                 }
             }
             catch(Exception e)
+            {
+
+            }
+
+            return postList;
+        }
+
+        public List<PostEntity> RetrieveTimeinePost(int id)
+        {
+            List<PostEntity> postList = new List<PostEntity>();
+            try
+            {
+                using (var context = new PASTEBOOK_Entities())
+                {
+                    var result = context.PB_POST.Where(x => x.PROFILE_OWNER_ID == id);
+                }
+            }
+            catch
             {
 
             }
@@ -87,6 +127,25 @@ namespace PastebookBL
                 }
             }
             catch(Exception e)
+            {
+
+            }
+            return status;
+        }
+
+        public int RemoveLike(int id)
+        {
+            int status = 0;
+            try
+            {
+                using (var context = new PASTEBOOK_Entities())
+                {
+                    var result = context.PB_LIKE.Where(x=>x.ID==id).SingleOrDefault();
+                    context.Entry(result).State = EntityState.Deleted;
+                    status = context.SaveChanges();
+                }
+            }
+            catch (Exception e)
             {
 
             }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PastebookEFModel;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace PastebookBL
 {
@@ -38,13 +39,13 @@ namespace PastebookBL
                     inputUser.Password = passwordManager.GeneratePasswordHash(inputUser.Password, out salt);
                     inputUser.Salt = salt;
                     inputUser.CreatedDate = DateTime.Now;
-
+    
                     var userMapped = mapper.UserEntityToDb(inputUser);
                     context.PB_USER.Add(userMapped);
                     status = context.SaveChanges();
                 }
             }
-            catch
+            catch(Exception ex)
             {
 
             }
@@ -107,6 +108,24 @@ namespace PastebookBL
             return user;
         }
 
+        public UserEntity RetrieveSpecificUser(string email)
+        {
+            var user = new UserEntity();
+            try
+            {
+                using (var context = new PASTEBOOK_Entities())
+                {
+                    var result = context.PB_USER.Where(x => x.EMAIL_ADDRESS == email).SingleOrDefault();
+                    user = mapper.UserDbToEntity(result);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return user;
+        }
+
         public List<UserEntity> RetrieveAllUser()
         {
             List<UserEntity> userList = new List<UserEntity>();
@@ -156,7 +175,7 @@ namespace PastebookBL
             {
                 using (var context = new PASTEBOOK_Entities())
                 {
-                    var result = context.PB_USER.Where(item => item.USER_NAME == inputUser.Username).SingleOrDefault();
+                    var result = context.PB_USER.Where(x => x.EMAIL_ADDRESS == inputUser.EmailAddress).SingleOrDefault();
                     if (passwordManager.IsPasswordMatch(inputUser.Password, result.SALT, result.PASSWORD))
                     {
                         status = 1;

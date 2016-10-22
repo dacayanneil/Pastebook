@@ -1,28 +1,28 @@
 ﻿@model Pastebook.HomeViewModel
 
-            @foreach(var post in Model.PostList)
-            {
-                <div class="div-post col-md-12">
-                    <div class="div-poster">
-                    @post.Poster.FirstName @post.Poster.LastName
-                    </div>
-                    <hr>
-                    <div class="div-content">
-                        @post.Content
-                    </div>
-                    <hr>
-                    <div class="div-options">
-                        <button class="btn btn-default" type="button">
-                            <span class="glyphicon glyphicon-thumbs-up">@post.LikeList.Count()</span>
-                            <span class="badge"></span>
-                        </button>
-                        <button class="btn btn-default" type="button">
-                            <span class="glyphicon glyphicon-comment">@post.CommentList.Count()</span>
-                            <span class="badge"></span>
-                        </button>
-                    </div>
+        @foreach(var post in Model.PostList)
+        {
+            <div class="div-post col-md-12">
+                <div class="div-poster">
+                @post.Poster.FirstName @post.Poster.LastName
                 </div>
-            }
+                <hr>
+                <div class="div-content">
+                    @post.Content
+                </div>
+                <hr>
+                <div class="div-options">
+                    <button class="btn btn-default" type="button" id="btnLike">
+                        <span class="glyphicon glyphicon-thumbs-up">@post.LikeList.Count()</span>
+                        <span class="badge"></span>
+                    </button>
+                    <button class="btn btn-default" type="button" id="btnComment">
+                        <span class="glyphicon glyphicon-comment">@post.CommentList.Count()</span>
+                        <span class="badge"></span>
+                    </button>
+                </div>
+            </div>
+        }
 
 
 

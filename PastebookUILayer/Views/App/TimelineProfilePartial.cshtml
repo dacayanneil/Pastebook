@@ -1,0 +1,47 @@
+﻿@model PastebookUILayer.UserFriendModel
+
+<div id="timelineProfile">
+    <div class="form-group">
+    <span>@Model.User.FIRST_NAME</span>
+    <span>@Model.User.LAST_NAME</span>
+    <span>@Model.User.BIRTHDAY</span>
+    <span>@Model.User.EMAIL_ADDRESS</span>
+    </div>
+    @{
+        var currentID = (int)Session["currentID"];
+
+        if (Model.User.ID != currentID)
+        {
+            if (!Model.Friends.Any(x => x.USER_ID == Model.User.ID || x.FRIEND_ID == Model.User.ID))
+            {
+                <button class="btn btn-default right" type="button" onclick="sendFriendRequest(@Model.User.ID)">
+                    Send Friend Request
+                </button>
+            }
+            else
+            {
+                foreach (var friend in Model.Friends)
+                {
+                    if (friend.USER_ID == Model.User.ID && friend.REQUEST == "Y")
+                    {
+                        <button class="btn btn-default right" type="button" onclick="acceptFriendRequest(@friend.ID)">Accept</button>
+                        <button class="btn btn-default right" type="button" onclick="declineFriendRequest(@friend.ID)"> Decline</button>
+                    }
+                        if (friend.FRIEND_ID == Model.User.ID && friend.REQUEST == "Y")
+                        {
+                        <button class="btn btn-default right" type="button" id="btnStatus">
+                            Friend Request Already Sent
+                        </button>
+                        }
+                    }
+                }
+            }
+        }
+</div>
+
+@section scripts {
+    <script>
+  
+    </script>
+    <script src="~/Scripts/FunctionScripts.js"> </script>
+}

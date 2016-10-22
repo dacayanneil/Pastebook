@@ -1,0 +1,61 @@
+﻿@model Pastebook.UserPostDetailsModel
+
+@foreach (var post in Model.PostList)
+{
+    <div class="div-post col-md-12">
+        <div class="div-poster">
+            <div class="div-right">
+            <a href='@Url.Action("TimeLineProfile", "Content", new { id = @post.Poster_ID})'>
+                @post.Poster.FirstName @post.Poster.LastName
+            </a>
+                </div>
+            <div class="div-left">
+            @post.CreatedDate
+                </div>
+        </div>
+        <hr/>
+        <div class="div-content">
+            @post.Content
+        </div>
+        <hr/>
+        <div class="div-options">   
+                    @{
+                        string status = "";
+                        int likeID = 0;
+                        var currentID = Int32.Parse(Session["currentID"].ToString());
+                        foreach (var item in post.LikeList)
+                        {
+                            if (item.Liked_By == currentID)
+                            {
+                                status = "liked";
+                                likeID = item.ID;
+                            }
+                        }
+                        if (status == "liked")
+                        {
+                            <button class="btn btn-default" type="button" id="btnLiked" onclick="unlikePost(@likeID)">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <span>Liked</span>
+                                @*<span class="badge">@post.LikeList.Count()</span>*@
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-default" type="button" id="btnUnliked" onclick="likePost(@post.ID)">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <span>Like</span>       
+                                @*<span class="badge">@post.LikeList.Count()</span>*@
+                            </button>
+                        }
+                    }
+            <button class="btn btn-default" type="button" id="btnComment">
+                <span class="glyphicon glyphicon-comment"></span>
+                <span>Comment</span>
+                @*<span class="badge">@post.CommentList.Count()</span>*@
+            </button>
+
+            <input type="text" id="commentbox"/>
+        </div>
+    </div>
+}
+

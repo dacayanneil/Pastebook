@@ -3,14 +3,35 @@
 }
 
 #page-body{
-    padding-top: 20px;
+    padding-top: 40px;
 }
 
 .form-body{
+    background-color: #FFFFFF;
     padding: 10px 10px 10px 10px;
     border-radius: 0;
     /*transition: all 0.3s cubic-bezier(.25,.8,.25,1);*/
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+
+#div-login{
+    background-color: #FFFFFF;
+    padding: 10px 10px 20px 10px;
+    border-radius: 0;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+#div-registration{
+    padding: 10px 10px 10px 10px;
+}
+
+.div-right{
+    float:left;
+}
+
+.div-left{
+    float: right;
 }
 
 .div-post{
@@ -21,22 +42,38 @@
 }
 
 .div-poster{
-    padding: 10px 0px 0px 0px;
+    padding: 10px 0px 10px 0px;
 }
 
 .div-content{
     background-color: #FFFFFF;
-    padding: 5px 0px 5px 0px;
+    padding: 5px 0px 0px 0px;
     width: 100%;
     height: 80px;
+    word-wrap: break-word;
+    overflow: auto;
 }
 
 .div-options{
-    padding: 0px 0px 0px 0px;
+    padding: 0px;
 }
 
 .textarea-post{
     background-color: #FFFFFF;
     width: 100%;
     height: 80px;
+    resize: none;
 }
+
+#btnLiked{
+   color: blue;
+}
+
+.btn{
+    font-weight: bold;
+    border: 0 !important;
+    border-radius: 0;
+    background: none;
+    -webkit-appearance: none;
+}
+

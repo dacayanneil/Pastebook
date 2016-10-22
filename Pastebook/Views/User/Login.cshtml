@@ -1,0 +1,41 @@
+﻿@model Pastebook.RegistrationViewModel
+
+<div class="container">
+    <div id="div-login">
+        @using (Html.BeginForm("Login", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        @@
+                    </span>
+                    @Html.EditorFor(model => model.User.EmailAddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email Address" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.User.EmailAddress, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+                    @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @type = "password" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+            </div>
+
+                <div class="form-group">
+                    @*<span class="glyphicon glyphicon-log-in">></span>*@
+                    <input type="submit" value="Login" class="form-control btn btn-default" />
+                </div>
+
+        }
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

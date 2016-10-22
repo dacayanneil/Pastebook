@@ -1,0 +1,42 @@
+﻿@model Int32
+
+<div class="container">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div>
+            @{
+                Html.RenderAction("TimelineProfile", new { id = Model });
+            }
+        </div>
+        <div>
+            @Html.Partial("CreatePostPartial")
+        </div>
+        <div id="postListPartial">
+            @{
+                Html.RenderAction("TimelinePost", new { id = Model });
+            }
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+@section scripts {
+    <script>
+            var CreatePostUrl = '@Url.Action("CreatePost", "App")';
+            var CreateCommentUrl = '@Url.Action("CreateComment", "App")';
+            var LikePostUrl = '@Url.Action("LikePost", "App")';
+            var LikeNotificationUrl = '@Url.Action("LikeNotification", "App")';
+            var GetCommentIDUrl = '@Url.Action("GetCommentID", "App")';
+            var CommentNotificationUrl = '@Url.Action("CommentNotification", "App")';
+            var FriendRequestNotificationUrl = '@Url.Action("FriendRequestNotification", "App")';
+            var UnlikePostUrl = '@Url.Action("UnlikePost", "App")';
+            var AcceptFriendRequestUrl = '@Url.Action("AcceptFriendRequest", "App")';
+            var DeclineFriendRequestUrl = '@Url.Action("DeclineFriendRequest", "App")';
+            var SendFriendRequestUrl = '@Url.Action("SendFriendRequest", "App")';
+            var PostRefreshUrl = '@Url.Action("NewsFeedPost", new { id = Model })';
+            var currentID = '@Session["currentID"]';
+            var profileOwner = currentID;
+
+   </script>
+   <script src="~/Scripts/FunctionScripts.js"> </script>
+}

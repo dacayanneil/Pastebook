@@ -33,6 +33,13 @@ namespace Pastebook
             return user;
         }
 
+        public UserModel RetrieveSpecificUser(string email)
+        {
+            var user = new UserModel();
+            user = mapper.UserEntityToModel(userBL.RetrieveSpecificUser(email));
+            return user;
+        }
+
         public UserListModel RetrieveAllUser()
         {
             var users = userBL.RetrieveAllUser();

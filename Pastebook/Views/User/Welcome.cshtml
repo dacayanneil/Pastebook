@@ -1,0 +1,39 @@
+﻿@model Pastebook.RegistrationViewModel
+
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="page-body">
+
+            <div id="div-login" class="col-md-4">
+                @{
+                    Html.RenderPartial("Login", Model.User);
+                }
+            </div>
+
+            <div id="div-login" class="col-md-4">
+                @{
+                    Html.RenderPartial("Registration", Model);
+                }
+            </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var CheckEmailAddressUrl = '@Url.Action("CheckEmailAddress", "User")';
+    </script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/Scripts/ValidationScripts/InputValidation.js"> </script>
+    <script src="~/Scripts/JQueryUIScripts/JQueryUI.js"> </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

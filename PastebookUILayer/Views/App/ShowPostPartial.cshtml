@@ -1,0 +1,77 @@
+﻿@model IEnumerable<PastebookEFModel.PB_POST>
+
+
+@foreach (var post in Model)
+{
+    <div class="form-group">
+    <div id="div-form-shadow" class="col-md-12">
+        <div class="form-group">
+            <a href='@Url.Action("Timeline", "App", new { id = @post.PB_USER.ID})'>
+                @post.PB_USER.FIRST_NAME @post.PB_USER.LAST_NAME
+            </a>
+            <span class="glyphicon glyphicon-triangle-right"></span>
+            <a href='@Url.Action("Timeline", "App", new { id = @post.PB_USER1.ID})'>
+                @post.PB_USER1.FIRST_NAME @post.PB_USER1.LAST_NAME
+            </a>
+        </div>
+        <div id="form-group" class="post-content">
+            @post.CONTENT
+        </div>
+        <div class="form-group">
+            <textarea id="textarea_@post.ID" class="textarea-post"></textarea>
+        </div>
+        <div id="post-options form-group">
+            @{
+                int likeID = 0;
+                foreach (var like in @post.PB_LIKE)
+                {
+                    if (like.LIKED_BY == (int)Session["currentID"])
+                    {
+
+                        likeID = like.ID;
+                    }
+                }
+                if (likeID != 0)
+                {
+                    <button class="btn btn-default" type="button" id="btnLiked" onclick="unlikePost(@likeID, @post.ID)">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span>Like</span>
+                        @*<span class="badge">@post.LikeList.Count()</span>*@
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-default" type="button" id="btnUnliked" onclick="likePost(@post.ID), likeNotification(@post.PB_USER1.ID, @post.ID)">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span>Like</span>
+                        @*<span class="badge">@post.LikeList.Count()</span>*@
+                    </button>
+                }
+            }
+            
+            <button class="btn btn-default" type="button" id="btnComment" value="@post.ID" onclick="CreateComment(this), getCommentID(@post.PB_USER1.ID, @post.ID)">
+                <span class="glyphicon glyphicon-comment"></span>
+                <span>Comment</span>
+                @*<span class="badge">@post.CommentList.Count()</span>*@
+            </button>
+        </div>
+
+        <div class=form-group>
+            @foreach (var comment in @post.PB_COMMENT)
+            {
+            <div>
+               @comment.PB_USER.FIRST_NAME @comment.PB_USER.LAST_NAME
+               @comment.CONTENT
+            </div>
+            }
+        </div>
+    </div>
+    </div>
+}
+
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

@@ -33,7 +33,7 @@ namespace Pastebook.Controllers
             if (ModelState.IsValid)
             {
                 userManger.AddUser(user);
-                return RedirectToAction("UserList");
+                return RedirectToAction("Home", "Content");
             }
             else
             {
@@ -57,17 +57,18 @@ namespace Pastebook.Controllers
             {
                 if(userManger.Login(user) == 1)
                 {
-                    Session["currentEmail"] = user.EmailAddress;
-                    return RedirectToAction("UserList");
+                    var currentUser = userManger.RetrieveSpecificUser(user.EmailAddress);
+                    Session["currentID"] = currentUser.ID;
+                    return RedirectToAction("Home", "Content");
                 }
                 else
                 {
-                    return View();
+                    return RedirectToAction("Welcome");
                 }
             }
             else
             {
-                return View();
+                return RedirectToAction("Welcome");
             }
         }
 
@@ -75,6 +76,13 @@ namespace Pastebook.Controllers
         {
             var process = userManger.CheckEmailAddress(email);
             return Json(new { status = process }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Welcome()
+        {
+            registrationViewModel.CountryList = userManger.RetreiveAllCountry();
+            return View(registrationViewModel);
         }
 
         public ActionResult UserList()
